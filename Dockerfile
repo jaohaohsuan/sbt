@@ -10,6 +10,7 @@ RUN mkdir -p $HOME && \
 ENV PATH=/var/sbt-launcher-packaging-0.13.13/bin:$PATH
 
 ADD global.sbt $HOME/.sbt/0.13/global.sbt
+ADD plugins.sbt $HOME/.sbt/0.13/plugins/build.sbt
 
 RUN mkdir ~/proj1 && cd $_ \
   && sbt about \
