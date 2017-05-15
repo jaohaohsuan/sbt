@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: akka-seed
+spec:
+  ports:
+  - port: 2551
+    protocol: TCP
+    targetPort: 2551
+  selector:
+    component: seed
+    app: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+  clusterIP: None

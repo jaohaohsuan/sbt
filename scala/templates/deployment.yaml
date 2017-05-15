@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+    spec:
+      volumes:
+      - name: ivy2
+        persistentVolumeClaim:
+          claimName: {{ template "fullname" . }}-ivy2
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        volumeMounts:
+          - name: ivy2
+            mountPath: /home/jenkins/.ivy2
+        command:
+          - "sh"
+          - "-c"
+          - "echo 'running since '`date +'%r'`; while true; do sleep 3; done"
+        ports:
+        - containerPort: {{ .Values.service.port }}

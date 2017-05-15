@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: akka-seed
+spec:
+  serviceName: akka-seed
+  replicas: 1
+  selector:
+    matchLabels:
+      component: seed
+      app: {{ .Chart.Name }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        component: seed
+        app: {{ .Chart.Name }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: seed
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        volumeMounts:
+          - name: ivy2
+            mountPath: /home/jenkins/.ivy2
+        command:
+          - "sh"
+          - "-c"
+          - "echo 'running since '`date +'%r'`; while true; do sleep 3; done"
+        ports:
+        - containerPort: 2551
+          protocol: TCP
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+      volumes:
+      - name: ivy2
+        persistentVolumeClaim:
+          claimName: {{ template "fullname" . }}-ivy2

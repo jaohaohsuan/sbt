@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: {{ template "fullname" . }}-ivy2
+ annotations:
+   "helm.sh/resource-policy": keep
+   volume.beta.kubernetes.io/storage-class: {{ .Values.volumes.ivy2.storageClass }}
+spec:
+ accessModes:
+  - {{ .Values.volumes.ivy2.accessModes }}
+ resources:
+   requests:
+     storage: {{ .Values.volumes.ivy2.size }}
