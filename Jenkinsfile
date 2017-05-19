@@ -12,7 +12,7 @@ podTemplate(
     node('sbt-uni') {
         def image
         stage('git clone') {
-            git(url: 'https://github.com/jaohaohsuan/sbt.git', branch: 'universal')
+            checkout scm
         }
         stage('build image') {
             def scalaVersion = "2.11.8"
