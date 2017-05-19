@@ -4,7 +4,7 @@
 replicaCount: 1
 image:
   repository: henryrao/sbt
-  tag: 2.11.8
+  tag: 2.11.8-fabric8
   pullPolicy: Always
 service:
   name: scala
@@ -15,3 +15,4 @@ volumes:
     storageClass: default
     accessModes: ReadWriteMany
     size: 2Gi
+akkaSeed: "off"

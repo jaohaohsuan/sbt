@@ -1,10 +1,11 @@
+{{- if eq .Values.akkaSeed "on" }}
 ---
 apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
-  name: akka-seed
+  name: dev-akka-seed
 spec:
-  serviceName: akka-seed
+  serviceName: dev-akka-seeds
   replicas: 1
   selector:
     matchLabels:
@@ -41,3 +42,4 @@ spec:
       - name: ivy2
         persistentVolumeClaim:
           claimName: {{ template "fullname" . }}-ivy2
+{{- end }}

@@ -17,7 +17,7 @@ podTemplate(
         stage('build image') {
             def scalaVersion = "2.11.8"
             sh """echo 'scalaVersion := "${scalaVersion}"' > global.sbt"""
-            image = docker.build("henryrao/sbt:${scalaVersion}", '--pull .')
+            image = docker.build("henryrao/sbt:${scalaVersion}-fabric8", '--pull .')
         }
         stage('testing') {
             image.inside {
@@ -42,12 +42,7 @@ podTemplate(
         }
         stage('push image') {
             withDockerRegistry(url: 'https://index.docker.io/v1/', credentialsId: 'docker-login') {
-                parallel versioned: {
-                    image.push()
-                }, latest: {
-                    image.push('latest')
-                },
-                failFast: false
+                image.push()
             }
         }
 				stage('package') {

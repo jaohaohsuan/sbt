@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM fabric8/java-alpine-openjdk8-jre:1.2
 
 ENV HOME=/home/jenkins
 
