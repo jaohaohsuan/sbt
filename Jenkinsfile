@@ -47,7 +47,7 @@ podTemplate(
                 }
             }
             stage('push image') {
-                withDockerRegistry(url: env.PRIVATE_REGISTRY_UR, credentialsId: 'docker-login') {
+                withDockerRegistry(url: env.PRIVATE_REGISTRY_URL, credentialsId: 'docker-login') {
                     image.push()
                 }
             }
