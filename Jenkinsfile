@@ -22,7 +22,7 @@ podTemplate(
             stage('build image') {
                 
                 sh """echo 'scalaVersion := "${scalaVersion}"' > global.sbt"""
-                def imgName = "${env.PRIVATE_REGISTRY}/library/sbt:${scalaVersion}-${env.BRANCH_NAME}"
+                def imgName = "${env.PRIVATE_REGISTRY}/library/sbt:${scalaVersion}-fabric8"
                 image = docker.build(imgName, '--pull .')
             }
             stage('testing') {
