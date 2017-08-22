@@ -14,7 +14,7 @@ podTemplate(
      
     node(podLabel) {
         ansiColor('xterm'){
-            def scalaVersion = "2.12.3"
+            def scalaVersion = "2.11.8"
             def image
             stage('git clone') {
                 checkout scm
