@@ -8,8 +8,7 @@ logLevel := Level.Info
 
 libraryDependencies ++= Seq(
     "ch.qos.logback" % "logback-classic" % "1.2.3",
-    "com.trueaccord.scalapb" %% "compilerplugin" % "0.6.1",
-    "org.slf4j" % "slf4j-simple" % "1.7.25"
+    "com.trueaccord.scalapb" %% "compilerplugin" % "0.6.2"
 )
 
 resolvers ++= Seq(
