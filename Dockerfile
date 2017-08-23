@@ -9,8 +9,6 @@ RUN mkdir -p $HOME && \
 
 ENV PATH=/var/sbt/bin:$PATH
 
-ADD global.sbt $HOME/.sbt/0.13/global.sbt
-
 RUN mkdir ~/proj1 && cd $_ \
   && sbt about \
   && rm -rf ~/proj1
