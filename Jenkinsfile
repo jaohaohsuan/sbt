@@ -38,9 +38,7 @@ podTemplate(
                         sh """
                         mkdir proj1 && cd \$_
                         sbt about | tee /tmp/sbt.log
-                        cat /tmp/sbt.log | grep '${scalaVersion}'
                         """
-                        
                     },
                     failFast: true
                 }
