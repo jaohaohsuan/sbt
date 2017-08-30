@@ -7,21 +7,19 @@ podTemplate(
     ],
     volumes: [
         emptyDirVolume(mountPath: '/var/run', memory: false),
-        hostPathVolume(mountPath: "/etc/docker/certs.d/${env.PRIVATE_REGISTRY}/ca.crt", hostPath: "/etc/docker/certs.d/${env.PRIVATE_REGISTRY}/ca.crt"),
-        hostPathVolume(mountPath: '/home/jenkins/.kube/config', hostPath: '/etc/kubernetes/admin.conf'),
-        persistentVolumeClaim(claimName: env.HELM_REPOSITORY, mountPath: '/var/helm/', readOnly: false)
+        hostPathVolume(mountPath: "/etc/docker/certs.d/${env.PRIVATE_REGISTRY}/ca.crt", hostPath: "/etc/docker/certs.d/${env.PRIVATE_REGISTRY}/ca.crt")
     ]) {
      
     node(podLabel) {
         ansiColor('xterm'){
-            def scalaVersion = "2.11.8"
+            def scalaVersion = "2.12.3"
             def image
             stage('git clone') {
                 checkout scm
             }
             stage('build image') {
                 
-                def imgName = "${env.PRIVATE_REGISTRY}/library/sbt:2.11-fabric8"
+                def imgName = "${env.PRIVATE_REGISTRY}/library/sbt:${scalaVersion}-fabric8"
                 image = docker.build(imgName, '--pull .')
             }
             stage('testing') {
@@ -48,16 +46,6 @@ podTemplate(
                     image.push()
                 }
             }
-            // stage('package') {
-            // 		docker.image('henryrao/helm:2.3.1').inside('') { c ->
-            // 				sh '''
-            // 				# packaging
-            // 				helm package --destination /var/helm/repo scala
-            // 				helm repo index --url https://grandsys.github.io/helm-repository/ --merge /var/helm/repo/index.yaml /var/helm/repo
-            // 				'''
-            // 		}
-            // 		build job: 'helm-repository/master', parameters: [string(name: 'commiter', value: "${env.JOB_NAME}\ncommit: ${sh(script: 'git log --format=%B -n 1', returnStdout: true).trim()}")]
-            // }
         }
     }
 }
