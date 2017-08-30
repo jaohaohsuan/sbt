@@ -1,10 +1,12 @@
-FROM fabric8/java-alpine-openjdk8-jre:1.2
+FROM fabric8/java-jboss-openjdk8-jdk:1.2
 
 ENV HOME=/home/jenkins
 
+USER root
+
 RUN mkdir -p $HOME && \
   sed -i "s|\/root|$HOME|g" /etc/passwd && \
-  apk --no-cache add bash curl tree git vim protobuf && \
+  yum install -y bash curl tree git vim && \
   curl -Lsk https://cocl.us/sbt01316tgz | tar -zxC /var
 
 ENV PATH=/var/sbt/bin:$PATH
